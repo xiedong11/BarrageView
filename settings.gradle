@@ -1,1 +1,1 @@
-include ':app',':example', ':barrageview-lib'
+include ':app', ':barrageview-lib', ':barrageexample'
