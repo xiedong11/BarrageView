@@ -15,7 +15,7 @@ allprojects {
 ```
 #### 在你的app.gradle中 ####
 ```
- implementation 'com.github.xiedong11:BarrageView:v1.0'
+  implementation 'com.github.xiedong11:BarrageView:1.1'
 ```
 ## 2.开始使用 ##
 #### 在初始化控件处装载弹幕内容 ####
