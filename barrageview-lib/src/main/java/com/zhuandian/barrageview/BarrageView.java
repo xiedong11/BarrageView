@@ -13,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -81,7 +80,12 @@ public class BarrageView extends RelativeLayout {
         super.onWindowFocusChanged(hasWindowFocus);
         totalHeight = getMeasuredHeight();
         lineHeight = getLineHeight();
-        totalLine = totalHeight / lineHeight;
+        try {
+            totalLine = totalHeight / lineHeight;
+        } catch (ArithmeticException e) {
+            //防止用户未设置弹幕内容，导致lineHeight未0时，出现除0异常
+        }
+
     }
 
     private void generateItem() {
@@ -167,16 +171,16 @@ public class BarrageView extends RelativeLayout {
      * @return
      */
     private int getLineHeight() {
-        BarrageItem item = new BarrageItem();
-        String tx = barrageItemList.get(0);
-        item.textView = new TextView(mContext);
-        item.textView.setText(tx);
-        item.textView.setTextSize(maxBarrageTextSize);
+        BarrageItem barrageItem = new BarrageItem();
+        String barrageContent = barrageItemList.size() == 0 ? "" : barrageItemList.get(0); //添加空校验
+        barrageItem.textView = new TextView(mContext);
+        barrageItem.textView.setText(barrageContent);
+        barrageItem.textView.setTextSize(maxBarrageTextSize);
 
         Rect bounds = new Rect();
         TextPaint paint;
-        paint = item.textView.getPaint();
-        paint.getTextBounds(tx, 0, tx.length(), bounds);
+        paint = barrageItem.textView.getPaint();
+        paint.getTextBounds(barrageContent, 0, barrageContent.length(), bounds);
         return bounds.height();
     }
 
